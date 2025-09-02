@@ -1,8 +1,8 @@
 import User from "../models/user.model.js";
 import Profile  from "../models/profile.model.js"; 
 import { Op } from "sequelize";
-import { signToken } from "../helpers/jwt.js";
 import { hashPassword, comparePasswords } from "../helpers/bcrypt.js";
+import { signToken } from "../helpers/jwt.js";
 
 // 📌 POST /api/auth/register
 export const register = async (req, res) => {
@@ -70,22 +70,22 @@ export const login = async (req, res) => {
     }
 
      // generar token
-    // const token = signToken({ id: user.id, role: user.role });
+    const token = signToken({ id: user.id, role: user.role });
 
      // guardar token en cookie
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   sameSite: "lax",
-    //   maxAge: 1000 * 60 * 60, // 1 hora
-    // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60, // 1 hora
+    });
 
     return res.status(200).json({
       msg: "Logueado correctamente",
     });
   } catch (error) {
     console.error("Error en login:", error);
-    res.status(500).json({ msg: "Error interno del servidor" });
+    res.status(500).json({ msg: "Error interno del servidor" , message: error.message});
   }
 };
 
@@ -104,7 +104,7 @@ export const profile = async (req, res) => {
     return res.status(200).json(user);
   } catch (error) {
     console.error("Error en profile:", error);
-    res.status(500).json({ msg: "Error interno del servidor" });
+    res.status(500).json({ msg: "Error interno del servidor" , message: error.message});
   }
 };
 
