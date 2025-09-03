@@ -1,7 +1,13 @@
 import { startDB } from "./src/config/database.js";
 import express from "express";
 import dotenv from "dotenv";
-import { authRoutes } from "./src/routes/auth.routes.js";
+import cookieParser from "cookie-parser";
+import  authRoutes  from "./src/routes/auth.routes.js";
+import  userRoutes from "./src/routes/user.routes.js";
+// import  personRoutes  from "./src/routes/person.routes.js";
+// import  userRoutes from "./src/routes/user.routes.js";
+// import  authRoutes  from "./src/routes/auth.routes.js";
+// import  taskRoutes from "./src/routes/task.routes.js";
 
 
 dotenv.config();
@@ -9,8 +15,13 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
-app.use("/api/auth", authRoutes);
+// Rutas
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+
+// Puerto
 
 
 

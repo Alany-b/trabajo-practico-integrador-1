@@ -1,5 +1,5 @@
 import { verifyToken } from '../helpers/jwt.js';
-import { User } from '../models/index.js';
+import  User  from '../models/user.model.js';
 
 export const authMiddleware = async (req, res, next) => {
   try {
