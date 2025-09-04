@@ -1,16 +1,19 @@
 import { startDB } from "./src/config/database.js";
 import express from "express";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+
+
+// 
 import  authRoutes  from "./src/routes/auth.routes.js";
 import  userRoutes from "./src/routes/user.routes.js";
-// import  personRoutes  from "./src/routes/person.routes.js";
-// import  userRoutes from "./src/routes/user.routes.js";
-// import  authRoutes  from "./src/routes/auth.routes.js";
-// import  taskRoutes from "./src/routes/task.routes.js";
-
+import  articleRoutes from "./src/routes/article.routes.js";
+import  articleTagRoutes from "./src/routes/article.tag.routes.js";
+import  tagRoutes from "./src/routes/tag.routes.js";
 
 dotenv.config();
+
+
 
 
 const app = express();
@@ -20,6 +23,9 @@ app.use(cookieParser());
 // Rutas
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+router.use("/tags", tagRoutes);
+router.use("/articles", articleRoutes);
+router.use("/", articleTagRoutes);
 
 // Puerto
 

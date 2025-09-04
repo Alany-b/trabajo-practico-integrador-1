@@ -37,6 +37,7 @@ export const getUserByPk = async (req, res) => {
     const user = await User.findByPk(id, {
       attributes: ["id", "username", "email", "role"],
       include: { model: Profile, as: "profile" },
+      paranoid: false, // 👈 para mostrar también si está eliminado
     });
 
     if (!user) {
@@ -70,17 +71,22 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// 📌 Eliminar usuario (soft delete porque User tiene paranoid:true)
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = await User.destroy({ where: { id } });
+  
+    const user = await User.findByPk(id, { paranoid: false });
 
-    if (!deleted) {
+    if (!user) {
       return res.status(404).json({ message: "El usuario no existe" });
     }
 
-    return res.status(200).json({ message: "Usuario eliminado (soft delete)" });
+    if (user.deletedAt) {
+      return res.status(410).json({ message: "El usuario ya había sido eliminado (soft delete)" });
+    }
+
+    await user.destroy(); // Soft delete
+    return res.status(200).json({ message: "Usuario eliminado correctamente (soft delete)" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

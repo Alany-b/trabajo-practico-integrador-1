@@ -6,7 +6,7 @@ import {
  updateProfile, 
  logout
 } from "../controllers/auth.controller.js";
-// import { authMiddleware } from "../middlewares/auth.js";
+import {authMiddleware} from "../middlewares/auth.middleware.js";
 
 export const authRoutes = Router();
 
