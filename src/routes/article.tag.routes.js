@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   addTagToArticle,
   removeTagFromArticle,
-} from "../controllers/articleTags.controller.js";
+} from "../controllers/article.tag.controller.js";
 
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { adminMiddleware } from "../middlewares/admin.middleware.js";

@@ -1,6 +1,6 @@
-import ArticleModel from "../models/Article.js";
-import ProfileModel from "../models/Profile.js";
-import TagModel from "../models/Tag.js";
+import ArticleModel from "../models/article.model.js";
+import ProfileModel from "../models/profile.model.js";
+import TagModel from "../models/article.tag.model.js";
 
 export const createArticle = async (req, res) => {
   try {

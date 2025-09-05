@@ -23,9 +23,9 @@ app.use(cookieParser());
 // Rutas
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
-router.use("/tags", tagRoutes);
-router.use("/articles", articleRoutes);
-router.use("/", articleTagRoutes);
+app.use("/articles", articleRoutes);
+app.use("/tags", tagRoutes);
+app.use("/", articleTagRoutes);
 
 // Puerto
 

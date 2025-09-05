@@ -1,5 +1,5 @@
-import ArticleModel from "../models/Article.js";
-import TagModel from "../models/Tag.js";
+import ArticleModel from "../models/article.model.js";
+import TagModel from "../models/article.tag.model.js";
 
 export const addTagToArticle = async (req, res) => {
   const { articleId, tagId } = req.params;
