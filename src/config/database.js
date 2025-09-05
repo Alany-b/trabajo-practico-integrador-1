@@ -24,6 +24,6 @@ export const startDB = async () => {
     }
 };
 
-export { sequelize };
+export default sequelize;
 
 // Configuración de la conexión a la base de datos

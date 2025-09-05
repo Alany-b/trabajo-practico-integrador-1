@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database.js';
+import  sequelize from '../config/database.js';
 
 const ArticleTag = sequelize.define('articleTag', {
   id:{
@@ -17,6 +17,17 @@ const ArticleTag = sequelize.define('articleTag', {
   timestamps: true
 });
 
+// ArticleTag.belongsTo(Tag, {
+//   foreignKey: "tag_id",
+//   as: "tags",
+//   onDelete: "CASCADE",
+// });
+
+// ArticleTag.belongsTo(Article, {
+//   foreignKey: "article_id",
+//   as: "articles",
+//   onDelete: "CASCADE",
+// });
 
 
 export default ArticleTag;

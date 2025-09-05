@@ -35,7 +35,7 @@ tagRouter.get(
   "/tags/:id",
   authMiddleware,
   adminMiddleware,
-  getTagByPkValidation,
+  idParamsTagValidation,
   applyValidations,
   getByPkTag
 );
@@ -54,7 +54,7 @@ tagRouter.delete(
   "/tags/:id",
   authMiddleware,
   adminMiddleware,
-  deleteTagValidation,
+  idParamsTagValidation,
   applyValidations,
   deleteTag
 );

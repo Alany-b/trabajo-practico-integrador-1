@@ -1,24 +1,43 @@
 import { Router } from "express";
 import {
- register, 
- login, 
- profile, 
- updateProfile, 
- logout
+  profile,
+  login,
+  logout,
+  register,
+  updateProfile,
 } from "../controllers/auth.controller.js";
-import {authMiddleware} from "../middlewares/auth.middleware.js";
+import {
+  createRegisterValidation,
+  updateProfileValidation,
+} from "../middlewares/validations/auth.validation.js";
+
+import applyValidations from "../middlewares/validator.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { dataValidada } from "../middlewares/matched.data.middleware.js";
 
 export const authRoutes = Router();
 
-authRoutes.get("/profile", profile);
+authRoutes.post(
+  "/auth/register",
+  createRegisterValidation,
+  applyValidations,
+  dataValidada,
+  register
+);
 
-authRoutes.put("/register", updateProfile);
+authRoutes.post("/auth/login", login);
 
-authRoutes.post("/logout", logout);
+authRoutes.post("/auth/logout", logout);
 
-// rutas publica
+authRoutes.get("/auth/profile", authMiddleware, profile);
 
-authRoutes.post("/register", register);
-authRoutes.post("/login", login);
+authRoutes.put(
+  "/auth/profile",
+  authMiddleware,
+  updateProfileValidation,
+  applyValidations,
+  dataValidada,
+  updateProfile
+);
 
 export default authRoutes;

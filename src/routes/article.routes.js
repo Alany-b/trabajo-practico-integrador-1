@@ -31,9 +31,17 @@ articleRouter.post(
   dataValidada,
   createArticle
 );
+articleRouter.get("/articles", authMiddleware, getAllArticles);
 
-// Listar todos los artículos → público
-articleRouter.get("/articles", getAllArticles);
+articleRouter.get(
+  "/articles/:id",
+  authMiddleware,
+  idArticleValidation,
+  applyValidations,
+  getByPkArticle
+);
+
+articleRouter.get("/articles/user", authMiddleware, getArticleUserLogin);
 
 articleRouter.get(
   "/articles/user/:id",
@@ -61,5 +69,6 @@ articleRouter.delete(
   applyValidations,
   deleteArticle
 );
+
 
 export default articleRouter;
