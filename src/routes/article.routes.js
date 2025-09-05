@@ -1,22 +1,23 @@
 import { Router } from "express";
 import {
   createArticle,
+  deleteArticle,
   getAllArticles,
+  getArticleUserLogin,
+  getArticleUserLoginById,
   getByPkArticle,
   updateArticle,
-  deleteArticle,
 } from "../controllers/article.controller.js";
 
 import {
   createArticleValidation,
-  getArticleByPkValidation,
+  idArticleValidation,
   updateArticleValidation,
-  deleteArticleValidation,
 } from "../middlewares/validations/article.validation.js";
 
 import applyValidations from "../middlewares/validator.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { adminMiddleware } from "../middlewares/admin.middleware.js";
+import { ownerMiddleware } from "../middlewares/owner.middleware.js";
 import { dataValidada } from "../middlewares/matched.data.middleware.js";
 
 const articleRouter = Router();
@@ -34,30 +35,29 @@ articleRouter.post(
 // Listar todos los artículos → público
 articleRouter.get("/articles", getAllArticles);
 
-// Obtener artículo por ID → público
 articleRouter.get(
-  "/articles/:id",
-  getArticleByPkValidation,
+  "/articles/user/:id",
+  authMiddleware,
+  idArticleValidation,
   applyValidations,
-  getByPkArticle
+  getArticleUserLoginById
 );
 
-// Actualizar artículo → solo autenticado (y en tu caso podemos meter después ownerMiddleware o adminMiddleware)
 articleRouter.put(
   "/articles/:id",
   authMiddleware,
+  ownerMiddleware,
   updateArticleValidation,
   applyValidations,
   dataValidada,
   updateArticle
 );
 
-// Eliminar artículo → solo admin (o podríamos poner ownerMiddleware + admin)
 articleRouter.delete(
   "/articles/:id",
   authMiddleware,
-  adminMiddleware,
-  deleteArticleValidation,
+  ownerMiddleware,
+  idArticleValidation,
   applyValidations,
   deleteArticle
 );

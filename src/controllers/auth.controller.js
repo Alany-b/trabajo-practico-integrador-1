@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import Profile  from "../models/profile.model.js"; 
 import { Op } from "sequelize";
-import { hashPassword, comparePasswords } from "../helpers/bcrypt.js";
+import { hashPassword, comparePassword } from "../helpers/bcrypt.js";
 import { signToken } from "../helpers/jwt.js";
 
 // 📌 POST /api/auth/register
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
     }
 
     // comparar password
-    const validPassword = await comparePasswords(password, user.password);
+    const validPassword = await comparePassword(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ msg: "Credenciales incorrectas" });
     }
